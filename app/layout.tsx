@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Sidebar from "./_components/sidebar";
 
 export const metadata: Metadata = {
   title: "Stockly",
@@ -18,7 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <div className="h-full flex">
+          <Sidebar />
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
