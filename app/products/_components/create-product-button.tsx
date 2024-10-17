@@ -3,7 +3,7 @@
 import { Button } from "@/app/_components/ui/button";
 import { Dialog, DialogTrigger } from "@/app/_components/ui/dialog";
 import { PlusIcon } from "lucide-react";
-import UpsertProductContent from "./upsert-product-content";
+import UpsertProductDialogContent from "./upsert-dialog-content";
 import { useState } from "react";
 
 const CreateProductButton = () => {
@@ -17,7 +17,7 @@ const CreateProductButton = () => {
           Novo produto
         </Button>
       </DialogTrigger>
-      <UpsertProductContent setDialogOpen={setDialogOpen} />
+      <UpsertProductDialogContent setDialogOpen={setDialogOpen} />
     </Dialog>
   );
 };

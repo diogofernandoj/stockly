@@ -20,7 +20,8 @@ import {
   TrashIcon,
 } from "lucide-react";
 import { useState } from "react";
-import UpsertProductContent from "./upsert-product-content";
+import UpsertProductDialogContent from "./upsert-dialog-content";
+import DeleteProductDialogContent from "./delete-dialog-content";
 
 interface ProductTableDropdownMenuProps {
   product: Product;
@@ -50,12 +51,23 @@ const ProductTableDropdownMenu = ({
               <ClipboardCopyIcon size={16} />
               Copiar ID
             </DropdownMenuItem>
+
             <DialogTrigger asChild>
               <DropdownMenuItem className="gap-1.5">
                 <EditIcon size={16} />
                 Editar
               </DropdownMenuItem>
             </DialogTrigger>
+            <UpsertProductDialogContent
+              defaultValues={{
+                id: product.id,
+                name: product.name,
+                price: Number(product.price),
+                stock: product.stock,
+              }}
+              setDialogOpen={setDialogOpen}
+            />
+
             <AlertDialogTrigger asChild>
               <DropdownMenuItem className="gap-1.5">
                 <TrashIcon size={16} />
@@ -64,15 +76,7 @@ const ProductTableDropdownMenu = ({
             </AlertDialogTrigger>
           </DropdownMenuContent>
         </DropdownMenu>
-        <UpsertProductContent
-          defaultValues={{
-            id: product.id,
-            name: product.name,
-            price: Number(product.price),
-            stock: product.stock,
-          }}
-          setDialogOpen={setDialogOpen}
-        />
+        <DeleteProductDialogContent id={product.id} />
       </Dialog>
     </AlertDialog>
   );

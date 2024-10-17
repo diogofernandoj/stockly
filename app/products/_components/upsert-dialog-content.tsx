@@ -29,15 +29,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-interface UpsertProductContentProps {
+interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProductSchema;
   setDialogOpen: (value: boolean) => void;
 }
 
-const UpsertProductContent = ({
+const UpsertProductDialogContent = ({
   defaultValues,
   setDialogOpen,
-}: UpsertProductContentProps) => {
+}: UpsertProductDialogContentProps) => {
   const form = useForm<UpsertProductSchema>({
     shouldUnregister: true,
     resolver: zodResolver(upsertProductSchema),
@@ -52,7 +52,7 @@ const UpsertProductContent = ({
     try {
       await upsertProduct({ ...values, id: defaultValues?.id ?? "" });
       setDialogOpen(false);
-      toast("Sucesso!");
+      toast.success("Registro realizado com sucesso!");
     } catch (error) {
       console.error(error);
     }
@@ -149,4 +149,4 @@ const UpsertProductContent = ({
   );
 };
 
-export default UpsertProductContent;
+export default UpsertProductDialogContent;
