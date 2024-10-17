@@ -50,7 +50,7 @@ const UpsertProductDialogContent = ({
 
   const onSubmit = async (values: UpsertProductSchema) => {
     try {
-      await upsertProduct({ ...values, id: defaultValues?.id ?? "" });
+      await upsertProduct(values);
       setDialogOpen(false);
       toast.success("Registro realizado com sucesso!");
     } catch (error) {

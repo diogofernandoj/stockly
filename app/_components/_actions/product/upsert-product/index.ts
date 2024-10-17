@@ -10,7 +10,7 @@ export const upsertProduct = async (data: UpsertProductSchema) => {
   try {
     await db.product.upsert({
       where: {
-        id: data.id,
+        id: data.id ?? "",
       },
       update: data,
       create: data,
