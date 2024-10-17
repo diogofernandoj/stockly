@@ -4,9 +4,9 @@ import Header, {
   HeaderSubtitle,
   HeaderTitle,
 } from "../_components/header";
-import { Button } from "../_components/ui/button";
 import { DataTable } from "../_components/ui/data-table";
 import { getProducts } from "../_data-access/product/get-products";
+import AddProductButton from "./_components/add-product-button";
 import { productTableColumns } from "./_components/product-table-columns";
 
 const ProductsPage = async () => {
@@ -20,10 +20,13 @@ const ProductsPage = async () => {
           <HeaderTitle>Produtos</HeaderTitle>
         </HeaderLeft>
         <HeaderRight>
-          <Button>Novo produto</Button>
+          <AddProductButton />
         </HeaderRight>
       </Header>
-      <DataTable columns={productTableColumns} data={products} />
+      <DataTable
+        columns={productTableColumns}
+        data={JSON.parse(JSON.stringify(products))}
+      />
     </div>
   );
 };
