@@ -5,7 +5,7 @@ import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
 import { Product } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
-import UpsertSheetContent from "./upsert-sheet-content";
+import UpsertSaleSheet from "./upsert-sale-sheet";
 import { ComboboxOption } from "@/app/_components/ui/combobox";
 
 interface UpsertSaleButtonProps {
@@ -27,7 +27,7 @@ const CreateSaleButton = ({
           Nova Venda
         </Button>
       </SheetTrigger>
-      <UpsertSheetContent productOptions={productOptions} products={products} />
+      <UpsertSaleSheet productOptions={productOptions} products={products} />
     </Sheet>
   );
 };

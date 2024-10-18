@@ -34,6 +34,7 @@ import { PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import DeleteItemButton from "./delete-item-button";
 
 const formSchema = z.object({
   productId: z.string().uuid({
@@ -47,7 +48,7 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-interface UpsertSheetContentProps {
+interface UpsertSaleSheetProps {
   productOptions: ComboboxOption[];
   products: Product[];
 }
@@ -59,10 +60,10 @@ interface SelectedProduct {
   quantity: number;
 }
 
-const UpsertSheetContent = ({
+const UpsertSaleSheet = ({
   productOptions,
   products,
-}: UpsertSheetContentProps) => {
+}: UpsertSaleSheetProps) => {
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
     [],
   );
@@ -113,6 +114,14 @@ const UpsertSheetContent = ({
       0,
     );
   }, [selectedProducts]);
+
+  const handleDeleteClick = (productId: string) => {
+    const newProducts = selectedProducts.filter(
+      (item) => item.id !== productId,
+    );
+
+    setSelectedProducts(newProducts);
+  };
 
   return (
     <SheetContent className="!w-full !max-w-max">
@@ -176,6 +185,7 @@ const UpsertSheetContent = ({
             <TableHead>Preço unit.</TableHead>
             <TableHead>Qtd.</TableHead>
             <TableHead className="text-right">Subtotal</TableHead>
+            <TableHead className="text-right"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -187,12 +197,18 @@ const UpsertSheetContent = ({
               <TableCell>
                 {formatCurrency(product.quantity * product.price)}
               </TableCell>
+              <TableCell>
+                <DeleteItemButton
+                  productId={product.id}
+                  onDelete={handleDeleteClick}
+                />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell colSpan={4}>Total</TableCell>
             <TableCell className="text-right">
               {formatCurrency(total)}
             </TableCell>
@@ -203,4 +219,4 @@ const UpsertSheetContent = ({
   );
 };
 
-export default UpsertSheetContent;
+export default UpsertSaleSheet;
