@@ -27,7 +27,11 @@ const CreateSaleButton = ({
           Nova Venda
         </Button>
       </SheetTrigger>
-      <UpsertSaleSheet productOptions={productOptions} products={products} />
+      <UpsertSaleSheet
+        productOptions={productOptions}
+        products={products}
+        setSheetIsOpen={setSheetIsOpen}
+      />
     </Sheet>
   );
 };

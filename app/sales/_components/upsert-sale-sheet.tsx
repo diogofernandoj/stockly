@@ -14,6 +14,7 @@ import { Input } from "@/app/_components/ui/input";
 import {
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/app/_components/ui/sheet";
@@ -30,11 +31,13 @@ import {
 import { formatCurrency } from "@/app/_helpers/currency";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Product } from "@prisma/client";
-import { PlusIcon } from "lucide-react";
+import { CheckIcon, PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import DeleteItemButton from "./delete-item-button";
+import { createSale } from "@/app/_actions/sale/create-sale";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   productId: z.string().uuid({
@@ -51,6 +54,7 @@ type FormSchema = z.infer<typeof formSchema>;
 interface UpsertSaleSheetProps {
   productOptions: ComboboxOption[];
   products: Product[];
+  setSheetIsOpen: (value: boolean) => void;
 }
 
 interface SelectedProduct {
@@ -63,6 +67,7 @@ interface SelectedProduct {
 const UpsertSaleSheet = ({
   productOptions,
   products,
+  setSheetIsOpen,
 }: UpsertSaleSheetProps) => {
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
     [],
@@ -130,12 +135,30 @@ const UpsertSaleSheet = ({
     );
   }, [selectedProducts]);
 
-  const handleDeleteClick = (productId: string) => {
+  const onDelete = (productId: string) => {
     const newProducts = selectedProducts.filter(
       (item) => item.id !== productId,
     );
 
     setSelectedProducts(newProducts);
+  };
+
+  const onSubmitSale = async () => {
+    try {
+      await createSale({
+        products: selectedProducts.map((item) => ({
+          id: item.id,
+          quantity: item.quantity,
+        })),
+      });
+      toast.success("Venda registrada com sucesso!");
+      setSelectedProducts([]);
+      form.reset();
+      setSheetIsOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao finalizar venda");
+    }
   };
 
   return (
@@ -213,10 +236,7 @@ const UpsertSaleSheet = ({
                 {formatCurrency(product.quantity * product.price)}
               </TableCell>
               <TableCell>
-                <DeleteItemButton
-                  productId={product.id}
-                  onDelete={handleDeleteClick}
-                />
+                <DeleteItemButton productId={product.id} onDelete={onDelete} />
               </TableCell>
             </TableRow>
           ))}
@@ -230,6 +250,17 @@ const UpsertSaleSheet = ({
           </TableRow>
         </TableFooter>
       </Table>
+
+      <SheetFooter>
+        <Button
+          className="mt-6 w-full gap-2"
+          disabled={!selectedProducts.length}
+          onClick={onSubmitSale}
+        >
+          <CheckIcon size={20} />
+          Finalizar venda
+        </Button>
+      </SheetFooter>
     </SheetContent>
   );
 };
