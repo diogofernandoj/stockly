@@ -23,6 +23,8 @@ export const saleTableColumns: ColumnDef<SaleDto>[] = [
   {
     accessorKey: "date",
     header: "Data",
-    cell: ({ row }) => <span>{row.original.date.toDateString()}</span>,
+    cell: ({ row }) => (
+      <span>{row.original.date.toLocaleDateString("pt-BR")}</span>
+    ),
   },
 ];
