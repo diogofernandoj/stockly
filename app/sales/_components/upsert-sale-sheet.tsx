@@ -162,7 +162,7 @@ const UpsertSaleSheet = ({
   };
 
   return (
-    <SheetContent className="!w-full !max-w-max">
+    <SheetContent className="!w-full !max-w-max overflow-auto">
       <SheetHeader>
         <SheetTitle>Nova venda</SheetTitle>
         <SheetDescription>
