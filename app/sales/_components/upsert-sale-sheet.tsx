@@ -30,7 +30,6 @@ import {
 } from "@/app/_components/ui/table";
 import { formatCurrency } from "@/app/_helpers/currency";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product } from "@prisma/client";
 import { CheckIcon, PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -38,6 +37,7 @@ import { z } from "zod";
 import DeleteItemButton from "./delete-item-button";
 import { createSale } from "@/app/_actions/sale/create-sale";
 import { toast } from "sonner";
+import { ProductDto } from "@/app/_data-access/product/get-products";
 
 const formSchema = z.object({
   productId: z.string().uuid({
@@ -53,7 +53,7 @@ type FormSchema = z.infer<typeof formSchema>;
 
 interface UpsertSaleSheetProps {
   productOptions: ComboboxOption[];
-  products: Product[];
+  products: ProductDto[];
   setSheetIsOpen: (value: boolean) => void;
 }
 

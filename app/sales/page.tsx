@@ -12,11 +12,12 @@ import { saleTableColumns } from "./_components/sale-table-columns";
 
 const SalesPage = async () => {
   const products = await getProducts();
+  const sales = await getSales();
+
   const productOptions = products.map((product) => ({
     label: product.name,
     value: product.id,
   }));
-  const sales = await getSales();
 
   return (
     <div className="m-8 w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
