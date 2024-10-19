@@ -58,15 +58,6 @@ const ProductTableDropdownMenu = ({
                 Editar
               </DropdownMenuItem>
             </DialogTrigger>
-            <UpsertProductDialogContent
-              defaultValues={{
-                id: product.id,
-                name: product.name,
-                price: Number(product.price),
-                stock: product.stock,
-              }}
-              setDialogOpen={setDialogOpen}
-            />
 
             <AlertDialogTrigger asChild>
               <DropdownMenuItem className="gap-1.5">
@@ -76,6 +67,15 @@ const ProductTableDropdownMenu = ({
             </AlertDialogTrigger>
           </DropdownMenuContent>
         </DropdownMenu>
+        <UpsertProductDialogContent
+          defaultValues={{
+            id: product.id,
+            name: product.name,
+            price: Number(product.price),
+            stock: product.stock,
+          }}
+          setDialogOpen={setDialogOpen}
+        />
         <DeleteProductDialogContent id={product.id} />
       </Dialog>
     </AlertDialog>
