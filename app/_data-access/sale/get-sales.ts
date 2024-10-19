@@ -32,7 +32,7 @@ export const getSales = async (): Promise<SaleDto[]> => {
       0,
     ),
     totalAmount: sale.saleProducts.reduce(
-      (acc, product) => acc + Number(product.unitPrice),
+      (acc, product) => acc + Number(product.unitPrice) * product.quantity,
       0,
     ),
     saleProducts: sale.saleProducts.map(
