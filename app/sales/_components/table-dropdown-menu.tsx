@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -20,48 +22,79 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import DeleteSaleDialogContent from "./delete-dialog-content";
+import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
+import UpsertSaleSheet from "./upsert-sale-sheet";
+import { ProductDto } from "@/app/_data-access/product/get-products";
+import { ComboboxOption } from "@/app/_components/ui/combobox";
+import { useState } from "react";
 
 interface SaleTableDropdownMenuProps {
   sale: SaleDto;
+  products: ProductDto[];
+  productOptions: ComboboxOption[];
 }
 
-const SaleTableDropdownMenu = ({ sale }: SaleTableDropdownMenuProps) => {
+const SaleTableDropdownMenu = ({
+  sale,
+  productOptions,
+  products,
+}: SaleTableDropdownMenuProps) => {
+  const [sheetIsOpen, setSheetIsOpen] = useState(false);
+
   const handleCopyIdClick = () => {
     navigator.clipboard.writeText(sale.id);
     toast.success("ID Copiado para a área de transferência!");
   };
 
   return (
-    <AlertDialog>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost">
-            <MoreHorizontalIcon size={16} />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Ações</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="gap-1.5" onClick={handleCopyIdClick}>
-            <ClipboardCopyIcon size={16} />
-            Copiar ID
-          </DropdownMenuItem>
-
-          <DropdownMenuItem className="gap-1.5">
-            <EditIcon size={16} />
-            Editar
-          </DropdownMenuItem>
-
-          <AlertDialogTrigger asChild>
-            <DropdownMenuItem className="gap-1.5">
-              <TrashIcon size={16} />
-              Deletar
+    <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
+      <AlertDialog>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">
+              <MoreHorizontalIcon size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="gap-1.5" onClick={handleCopyIdClick}>
+              <ClipboardCopyIcon size={16} />
+              Copiar ID
             </DropdownMenuItem>
-          </AlertDialogTrigger>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <DeleteSaleDialogContent id={sale.id} />
-    </AlertDialog>
+
+            <SheetTrigger asChild>
+              <DropdownMenuItem className="gap-1.5">
+                <EditIcon size={16} />
+                Editar
+              </DropdownMenuItem>
+            </SheetTrigger>
+
+            <AlertDialogTrigger asChild>
+              <DropdownMenuItem className="gap-1.5">
+                <TrashIcon size={16} />
+                Deletar
+              </DropdownMenuItem>
+            </AlertDialogTrigger>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DeleteSaleDialogContent id={sale.id} />
+      </AlertDialog>
+
+      <UpsertSaleSheet
+        products={products}
+        productOptions={productOptions}
+        setSheetIsOpen={setSheetIsOpen}
+        saleId={sale.id}
+        sheetIsOpen={sheetIsOpen}
+        defaultSelectedProducts={sale.saleProducts.map((product) => ({
+          id: product.productId,
+          name: product.productName,
+          price: product.unitPrice,
+          quantity: product.quantity,
+        }))}
+      />
+    </Sheet>
   );
 };
 

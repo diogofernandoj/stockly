@@ -1,20 +1,45 @@
 "use server";
 
 import { db } from "@/app/_lib/prisma";
-import { createSaleSchema, CreateSaleSchema } from "./schema";
+import { upsertSaleSchema, UpsertSaleSchema } from "./schema";
 import { revalidatePath } from "next/cache";
 
-export const createSale = async (data: CreateSaleSchema) => {
-  createSaleSchema.parse(data);
+export const upsertSale = async (data: UpsertSaleSchema) => {
+  upsertSaleSchema.parse(data);
+
+  const { products, id } = data;
 
   await db.$transaction(async (trx) => {
+    const isUpdating = Boolean(id);
+
+    if (isUpdating) {
+      const updatingSale = await db.sale.findUnique({
+        where: { id },
+        include: { saleProducts: true },
+      });
+      if (!updatingSale) return;
+
+      for (const saleProduct of updatingSale.saleProducts) {
+        await trx.product.update({
+          where: { id: saleProduct.productId },
+          data: {
+            stock: { increment: saleProduct.quantity },
+          },
+        });
+      }
+
+      await trx.sale.delete({
+        where: { id },
+      });
+    }
+
     const sale = await trx.sale.create({
       data: {
         date: new Date(),
       },
     });
 
-    for (const product of data.products) {
+    for (const product of products) {
       const productFromDb = await db.product.findUnique({
         where: { id: product.id },
       });
