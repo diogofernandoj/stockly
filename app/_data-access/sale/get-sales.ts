@@ -37,7 +37,7 @@ export const getSales = async (): Promise<SaleDto[]> => {
     ),
     saleProducts: sale.saleProducts.map(
       (saleProduct): SaleProductDto => ({
-        productId: saleProduct.id,
+        productId: saleProduct.product.id,
         productName: saleProduct.product.name,
         quantity: saleProduct.quantity,
         unitPrice: Number(saleProduct.unitPrice),
