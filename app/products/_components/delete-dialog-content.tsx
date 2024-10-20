@@ -19,7 +19,7 @@ const DeleteProductDialogContent = ({
 }: DeleteProductDialogContentProps) => {
   const handleDeleteClick = async () => {
     try {
-      await deleteProduct(id);
+      await deleteProduct({ id });
       toast.success("Produto deletado com sucesso!");
     } catch (error) {
       console.error(error);
