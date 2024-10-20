@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { SaleDto } from "@/app/_data-access/sale/get-sales";
 import { formatCurrency } from "@/app/_helpers/currency";
+import SaleTableDropdownMenu from "./table-dropdown-menu";
 
 export const saleTableColumns: ColumnDef<SaleDto>[] = [
   {
@@ -26,5 +27,10 @@ export const saleTableColumns: ColumnDef<SaleDto>[] = [
     cell: ({ row }) => (
       <span>{row.original.date.toLocaleDateString("pt-BR")}</span>
     ),
+  },
+  {
+    accessorKey: "actions",
+    header: "Ações",
+    cell: ({ row }) => <SaleTableDropdownMenu sale={row.original} />,
   },
 ];
