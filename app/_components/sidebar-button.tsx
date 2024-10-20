@@ -15,7 +15,7 @@ const SidebarButton = ({ href, children }: SidebarButtonProps) => {
   return (
     <Button
       variant={pathname === `${href}` ? "secondary" : "ghost"}
-      className="justify-start gap-2"
+      className={`justify-start gap-2 ${pathname === href && "font-semibold"}`}
       asChild
     >
       <Link href={href}>{children}</Link>
