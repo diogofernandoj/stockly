@@ -10,5 +10,5 @@ export const deleteProduct = async (data: DeleteProductSchema) => {
   await db.product.delete({
     where: data,
   });
-  revalidatePath("/");
+  revalidatePath("/", "layout");
 };

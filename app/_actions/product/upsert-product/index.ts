@@ -12,5 +12,5 @@ export const upsertProduct = async (data: UpsertProductSchema) => {
     update: data,
     create: data,
   });
-  revalidatePath("/");
+  revalidatePath("/", "layout");
 };

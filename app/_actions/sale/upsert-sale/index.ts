@@ -71,4 +71,5 @@ export const upsertSale = async (data: UpsertSaleSchema) => {
   });
 
   revalidatePath("/");
+  revalidatePath("/sales");
 };
