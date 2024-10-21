@@ -1,62 +1,67 @@
-import {
-  DollarSignIcon,
-  HandCoinsIcon,
-  PackageIcon,
-  ShoppingBasketIcon,
-} from "lucide-react";
 import Header, {
   HeaderLeft,
   HeaderSubtitle,
   HeaderTitle,
 } from "../_components/header";
-import {
-  SummaryCard,
-  SummaryCardIcon,
-  SummaryCardTitle,
-  SummaryCardValue,
-} from "./_components/summary-card";
+import { SummaryCardSkeleton } from "./_components/summary-card";
+import TotalRevenueCard from "./_components/total-revenue-card";
+import { Suspense } from "react";
+import TodayRevenueCard from "./_components/today-revenue-card";
+import TotalSalesCard from "./_components/total-sales-card";
+import TotalInStockCard from "./_components/total-in-stock-card";
+import TotalProductsCard from "./_components/total-products-card";
+import Last14DaysRevenueCard from "./_components/last-14-days-revenue-card";
+import { Skeleton } from "../_components/ui/skeleton";
 
-const DashboardPage = () => {
+// Essa página será montada do zero a cada acesso (SSR)
+export const dynamic = "force-dynamic";
+
+const Home = async () => {
   return (
-    <div className="m-8 w-full space-y-8 overflow-auto rounded-lg">
+    <div className="m-8 flex w-full flex-col space-y-8 rounded-lg">
       <Header>
         <HeaderLeft>
-          <HeaderSubtitle>Visão Geral</HeaderSubtitle>
+          <HeaderSubtitle>Visão geral dos dados</HeaderSubtitle>
           <HeaderTitle>Dashboard</HeaderTitle>
         </HeaderLeft>
       </Header>
-      <div className="grid grid-cols-2 gap-4">
-        <SummaryCard>
-          <SummaryCardIcon>{<DollarSignIcon size={24} />}</SummaryCardIcon>
-          <SummaryCardTitle>Receita total</SummaryCardTitle>
-          <SummaryCardValue>R$ 45.000,00</SummaryCardValue>
-        </SummaryCard>
-        <SummaryCard>
-          <SummaryCardIcon>{<DollarSignIcon size={24} />}</SummaryCardIcon>
-          <SummaryCardTitle>Receita hoje</SummaryCardTitle>
-          <SummaryCardValue>R$ 5.000,00</SummaryCardValue>
-        </SummaryCard>
+
+      <div className="grid grid-cols-2 gap-6">
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalRevenueCard />
+        </Suspense>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TodayRevenueCard />
+        </Suspense>
+      </div>
+      <div className="grid grid-cols-3 gap-6">
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalSalesCard />
+        </Suspense>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalInStockCard />
+        </Suspense>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalProductsCard />
+        </Suspense>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <SummaryCard>
-          <SummaryCardIcon>{<HandCoinsIcon size={24} />}</SummaryCardIcon>
-          <SummaryCardTitle>Vendas totais</SummaryCardTitle>
-          <SummaryCardValue>1040</SummaryCardValue>
-        </SummaryCard>
-        <SummaryCard>
-          <SummaryCardIcon>{<PackageIcon size={24} />}</SummaryCardIcon>
-          <SummaryCardTitle>Total em estoque</SummaryCardTitle>
-          <SummaryCardValue>12020</SummaryCardValue>
-        </SummaryCard>
-        <SummaryCard>
-          <SummaryCardIcon>{<ShoppingBasketIcon size={24} />}</SummaryCardIcon>
-          <SummaryCardTitle>Produtos</SummaryCardTitle>
-          <SummaryCardValue>55</SummaryCardValue>
-        </SummaryCard>
+      <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
+        <Suspense
+          fallback={
+            <Skeleton className="bg-white p-6">
+              <div className="space-y-2">
+                <div className="h-5 w-[86.26px] rounded-md bg-gray-200" />
+                <div className="h-4 w-48 rounded-md bg-gray-200" />
+              </div>
+            </Skeleton>
+          }
+        >
+          <Last14DaysRevenueCard />
+        </Suspense>
       </div>
     </div>
   );
 };
 
-export default DashboardPage;
+export default Home;
