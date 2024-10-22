@@ -12,13 +12,16 @@ import TotalInStockCard from "./_components/total-in-stock-card";
 import TotalProductsCard from "./_components/total-products-card";
 import Last14DaysRevenueCard from "./_components/last-14-days-revenue-card";
 import { Skeleton } from "../_components/ui/skeleton";
+import MostSoldProducts, {
+  MostSoldProductsSkeleton,
+} from "./_components/most-sold-products";
 
 // Essa página será montada do zero a cada acesso (SSR)
 export const dynamic = "force-dynamic";
 
-const Home = async () => {
+const DashboardPage = async () => {
   return (
-    <div className="m-8 flex w-full flex-col space-y-8 rounded-lg">
+    <div className="m-8 flex min-h-full w-full flex-col space-y-8 rounded-lg">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Visão geral dos dados</HeaderSubtitle>
@@ -59,9 +62,12 @@ const Home = async () => {
         >
           <Last14DaysRevenueCard />
         </Suspense>
+        <Suspense fallback={<MostSoldProductsSkeleton />}>
+          <MostSoldProducts />
+        </Suspense>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default DashboardPage;

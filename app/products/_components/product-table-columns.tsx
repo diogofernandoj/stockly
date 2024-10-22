@@ -29,7 +29,7 @@ export const productTableColumns: ColumnDef<ProductDto>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row: { original: product } }) => {
-      return <ProductStatusBadge stock={product.stock} />;
+      return <ProductStatusBadge status={product.status} />;
     },
   },
   {

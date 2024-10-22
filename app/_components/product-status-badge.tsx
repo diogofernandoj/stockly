@@ -1,18 +1,19 @@
+import { ProductStatusDto } from "../_data-access/product/get-products";
 import { Badge } from "./ui/badge";
 
-const getStatusLabel = (stock: number) => {
-  if (stock > 0) {
+const getStatusLabel = (status: string) => {
+  if (status === "IN_STOCK") {
     return "Em estoque";
   }
-  return "Esgotado";
+  return "Fora de estoque";
 };
 
 interface ProductStatusBadgeProps {
-  stock: number;
+  status: ProductStatusDto;
 }
 
-const ProductStatusBadge = ({ stock }: ProductStatusBadgeProps) => {
-  const label = getStatusLabel(stock);
+const ProductStatusBadge = ({ status }: ProductStatusBadgeProps) => {
+  const label = getStatusLabel(status);
   return (
     <Badge
       variant={label === "Em estoque" ? "default" : "outline"}
