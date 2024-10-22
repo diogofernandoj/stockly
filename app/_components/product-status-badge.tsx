@@ -16,7 +16,7 @@ const ProductStatusBadge = ({ status }: ProductStatusBadgeProps) => {
   const label = getStatusLabel(status);
   return (
     <Badge
-      variant={label === "Em estoque" ? "default" : "outline"}
+      variant={label === "Em estoque" ? "default" : "secondary"}
       className="gap-1.5"
     >
       {label}

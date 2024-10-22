@@ -12,6 +12,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 const chartConfig = {
   totalRevenue: {
     label: "Receita",
+    color: "#10b981",
   },
 } satisfies ChartConfig;
 
@@ -31,7 +32,11 @@ const RevenueChart = ({ data }: RevenueChartProps) => {
           axisLine={false}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
-        <Bar dataKey="totalRevenue" radius={4} />
+        <Bar
+          dataKey="totalRevenue"
+          radius={4}
+          fill="var(--color-totalRevenue)"
+        />
       </BarChart>
     </ChartContainer>
   );
