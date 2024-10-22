@@ -15,6 +15,7 @@ import { Skeleton } from "../_components/ui/skeleton";
 import MostSoldProducts, {
   MostSoldProductsSkeleton,
 } from "./_components/most-sold-products";
+import SidebarSheetButton from "../_components/sidebar-sheet-button";
 
 // Essa página será montada do zero a cada acesso (SSR)
 export const dynamic = "force-dynamic";
@@ -23,13 +24,14 @@ const DashboardPage = async () => {
   return (
     <div className="m-8 flex min-h-full w-full flex-col space-y-8 rounded-lg">
       <Header>
+        <SidebarSheetButton />
         <HeaderLeft>
           <HeaderSubtitle>Visão geral dos dados</HeaderSubtitle>
           <HeaderTitle>Dashboard</HeaderTitle>
         </HeaderLeft>
       </Header>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="flex flex-col gap-6 lg:grid lg:grid-cols-2">
         <Suspense fallback={<SummaryCardSkeleton />}>
           <TotalRevenueCard />
         </Suspense>
@@ -37,7 +39,7 @@ const DashboardPage = async () => {
           <TodayRevenueCard />
         </Suspense>
       </div>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3">
         <Suspense fallback={<SummaryCardSkeleton />}>
           <TotalSalesCard />
         </Suspense>
@@ -49,7 +51,7 @@ const DashboardPage = async () => {
         </Suspense>
       </div>
 
-      <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
+      <div className="flex min-h-0 flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,2.5fr),minmax(0,1fr)]">
         <Suspense
           fallback={
             <Skeleton className="bg-white p-6">
