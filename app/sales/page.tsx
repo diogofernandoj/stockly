@@ -4,6 +4,7 @@ import Header, {
   HeaderSubtitle,
   HeaderTitle,
 } from "../_components/header";
+import SidebarSheetButton from "../_components/sidebar-sheet-button";
 import { ComboboxOption } from "../_components/ui/combobox";
 import { DataTable } from "../_components/ui/data-table";
 import { getProducts } from "../_data-access/product/get-products";
@@ -25,8 +26,9 @@ const SalesPage = async () => {
   }));
 
   return (
-    <div className="m-8 w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
+    <div className="w-full space-y-8 overflow-auto rounded-lg bg-white p-8 lg:m-8">
       <Header>
+        <SidebarSheetButton />
         <HeaderLeft>
           <HeaderSubtitle>Gestão de Vendas</HeaderSubtitle>
           <HeaderTitle>Vendas</HeaderTitle>

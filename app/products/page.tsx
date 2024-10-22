@@ -4,6 +4,7 @@ import Header, {
   HeaderSubtitle,
   HeaderTitle,
 } from "../_components/header";
+import SidebarSheetButton from "../_components/sidebar-sheet-button";
 import { DataTable } from "../_components/ui/data-table";
 import { getProducts } from "../_data-access/product/get-products";
 import CreateProductButton from "./_components/create-product-button";
@@ -13,8 +14,9 @@ const ProductsPage = async () => {
   const products = await getProducts();
 
   return (
-    <div className="m-8 w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
+    <div className="w-full space-y-8 overflow-auto rounded-lg bg-white p-8 lg:m-8">
       <Header>
+        <SidebarSheetButton />
         <HeaderLeft>
           <HeaderSubtitle>Gestão de Produtos</HeaderSubtitle>
           <HeaderTitle>Produtos</HeaderTitle>
