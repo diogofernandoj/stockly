@@ -28,6 +28,7 @@ import { NumericFormat } from "react-number-format";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProductSchema;
@@ -58,6 +59,12 @@ const UpsertProductDialogContent = ({
       toast.error("Algo deu errado!");
     }
   };
+
+  useEffect(() => {
+    if (defaultValues) {
+      form.reset(defaultValues);
+    }
+  }, [defaultValues, form]);
 
   return (
     <DialogContent>
